@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import UploadPage from "./pages/UploadPage";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import { DatasetProvider } from "./context/DatasetContext";
 
 const queryClient = new QueryClient();
 
@@ -16,15 +17,17 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/upload" element={<UploadPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <DatasetProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </DatasetProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

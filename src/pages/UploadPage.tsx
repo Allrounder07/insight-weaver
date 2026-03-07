@@ -1,16 +1,21 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Upload, FileSpreadsheet, CheckCircle2, AlertCircle, X, ArrowRight } from "lucide-react";
+import { Upload, FileSpreadsheet, CheckCircle2, AlertCircle, X, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
+import { useDataset } from "@/context/DatasetContext";
+import { analyzeDataset } from "@/lib/analyzeDataset";
 
 const UploadPage = () => {
   const navigate = useNavigate();
+  const { setAnalysis } = useDataset();
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string[][] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [fullData, setFullData] = useState<string[][] | null>(null);
 
   const processFile = useCallback((f: File) => {
     setError(null);
@@ -26,14 +31,16 @@ const UploadPage = () => {
     setFile(f);
 
     if (ext === "csv") {
+      // Parse full file
       Papa.parse(f, {
-        preview: 6,
         complete: (results) => {
-          setPreview(results.data as string[][]);
+          const data = results.data as string[][];
+          setFullData(data);
+          setPreview(data.slice(0, 6));
         },
       });
     } else {
-      setPreview([["Excel preview not available — analysis will still work."]]);
+      setError("Only CSV files are supported for analysis at the moment.");
     }
   }, []);
 
@@ -50,8 +57,19 @@ const UploadPage = () => {
   }, [processFile]);
 
   const handleAnalyze = () => {
-    // In a real app, we'd process the file. For demo, navigate to dashboard.
-    navigate("/dashboard");
+    if (!fullData || !file) return;
+    setAnalyzing(true);
+    // Use setTimeout to allow UI to update before heavy computation
+    setTimeout(() => {
+      try {
+        const result = analyzeDataset(fullData, file.name, file.size);
+        setAnalysis(result);
+        navigate("/dashboard");
+      } catch (e) {
+        setError("Failed to analyze dataset. Please check the file format.");
+        setAnalyzing(false);
+      }
+    }, 50);
   };
 
   return (
@@ -66,7 +84,7 @@ const UploadPage = () => {
             Upload Your <span className="gradient-text">Dataset</span>
           </h1>
           <p className="text-muted-foreground">
-            Drop a CSV or Excel file to start instant AI-powered analysis.
+            Drop a CSV file to start instant AI-powered analysis.
           </p>
         </motion.div>
 
@@ -92,7 +110,7 @@ const UploadPage = () => {
             <input
               id="file-input"
               type="file"
-              accept=".csv,.xlsx,.xls"
+              accept=".csv"
               className="hidden"
               onChange={handleFileInput}
             />
@@ -107,7 +125,7 @@ const UploadPage = () => {
                     {isDragging ? "Drop your file here" : "Drag & drop your dataset"}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    or click to browse · CSV, Excel · Max 50MB
+                    or click to browse · CSV · Max 50MB
                   </p>
                 </div>
               </div>
@@ -121,7 +139,7 @@ const UploadPage = () => {
                     ({(file.size / 1024).toFixed(1)} KB)
                   </span>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setFile(null); setPreview(null); }}
+                    onClick={(e) => { e.stopPropagation(); setFile(null); setPreview(null); setFullData(null); }}
                     className="ml-2 rounded p-1 text-muted-foreground hover:text-foreground"
                   >
                     <X className="h-4 w-4" />
@@ -145,7 +163,9 @@ const UploadPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="mt-6"
             >
-              <p className="mb-3 text-sm font-medium text-muted-foreground">Data Preview</p>
+              <p className="mb-3 text-sm font-medium text-muted-foreground">
+                Data Preview {fullData && `· ${(fullData.length - 1).toLocaleString()} rows × ${fullData[0].length} columns`}
+              </p>
               <div className="overflow-x-auto rounded-lg border border-border">
                 <table className="w-full text-sm">
                   <thead>
@@ -174,7 +194,7 @@ const UploadPage = () => {
           )}
 
           {/* Analyze button */}
-          {file && (
+          {file && fullData && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -183,10 +203,20 @@ const UploadPage = () => {
               <Button
                 size="lg"
                 onClick={handleAnalyze}
+                disabled={analyzing}
                 className="gap-2 bg-primary px-10 text-primary-foreground hover:bg-primary/90"
               >
-                Analyze Dataset
-                <ArrowRight className="h-4 w-4" />
+                {analyzing ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Analyzing...
+                  </>
+                ) : (
+                  <>
+                    Analyze Dataset
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
               </Button>
             </motion.div>
           )}
