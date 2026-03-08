@@ -37,6 +37,7 @@ const App = () => (
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/upload" element={<ProtectedRoute><UploadPage /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/shared/:shareId" element={<SharedDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
