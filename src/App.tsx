@@ -9,6 +9,7 @@ import UploadPage from "./pages/UploadPage";
 import Dashboard from "./pages/Dashboard";
 import SharedDashboard from "./pages/SharedDashboard";
 import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import { DatasetProvider } from "./context/DatasetContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
