@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Upload, FileSpreadsheet, CheckCircle2, AlertCircle, X, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
+import * as XLSX from "xlsx";
 import { useDataset } from "@/context/DatasetContext";
 import { analyzeDataset } from "@/lib/analyzeDataset";
 
@@ -31,7 +32,6 @@ const UploadPage = () => {
     setFile(f);
 
     if (ext === "csv") {
-      // Parse full file
       Papa.parse(f, {
         complete: (results) => {
           const data = results.data as string[][];
@@ -40,7 +40,21 @@ const UploadPage = () => {
         },
       });
     } else {
-      setError("Only CSV files are supported for analysis at the moment.");
+      // Excel parsing
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const wb = XLSX.read(e.target?.result, { type: "array" });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const data = XLSX.utils.sheet_to_json<string[]>(ws, { header: 1, defval: "" });
+          const strData = data.map((row) => row.map((cell) => String(cell)));
+          setFullData(strData);
+          setPreview(strData.slice(0, 6));
+        } catch {
+          setError("Failed to parse Excel file.");
+        }
+      };
+      reader.readAsArrayBuffer(f);
     }
   }, []);
 
@@ -84,7 +98,7 @@ const UploadPage = () => {
             Upload Your <span className="gradient-text">Dataset</span>
           </h1>
           <p className="text-muted-foreground">
-            Drop a CSV file to start instant AI-powered analysis.
+            Drop a CSV or Excel file to start instant AI-powered analysis.
           </p>
         </motion.div>
 
@@ -110,7 +124,7 @@ const UploadPage = () => {
             <input
               id="file-input"
               type="file"
-              accept=".csv"
+              accept=".csv,.xlsx,.xls"
               className="hidden"
               onChange={handleFileInput}
             />
@@ -125,7 +139,7 @@ const UploadPage = () => {
                     {isDragging ? "Drop your file here" : "Drag & drop your dataset"}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    or click to browse · CSV · Max 50MB
+                    or click to browse · CSV, XLSX · Max 50MB
                   </p>
                 </div>
               </div>
