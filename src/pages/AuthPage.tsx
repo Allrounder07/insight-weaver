@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Loader2, BarChart3 } from "lucide-react";
@@ -13,8 +13,15 @@ const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
+
+  // Redirect authenticated users away from auth page
+  useEffect(() => {
+    if (user) {
+      navigate("/upload", { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
