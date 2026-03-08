@@ -384,12 +384,34 @@ const Dashboard = () => {
           <CorrelationHeatmap analysis={analysis} />
         )}
 
-        {/* AI Insights */}
+        {/* Validation Report */}
+        {analysis.validationReport && (
+          <ValidationReportCard report={analysis.validationReport} />
+        )}
+
+        {/* AI-Generated Insights */}
+        {analysis.aiInsights && (
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="glass-card glow-border mb-8 p-6">
+            <div className="mb-4 flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <h2 className="text-lg font-bold">AI-Generated Insights</h2>
+            </div>
+            <div className="prose prose-invert prose-sm max-w-none text-muted-foreground [&_strong]:text-foreground">
+              {analysis.aiInsights.split("\n").map((line, i) => (
+                <p key={i} className={line.trim() === "" ? "hidden" : "mb-2 text-sm leading-relaxed"}>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Pattern Insights */}
         {insights.length > 0 && (
           <motion.div initial="hidden" animate="visible" className="mb-8">
             <motion.div custom={0} variants={fadeUp} className="mb-6 flex items-center gap-2">
               <Brain className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-bold">AI Insights</h2>
+              <h2 className="text-xl font-bold">Pattern Analysis</h2>
             </motion.div>
             <div className="grid gap-4 sm:grid-cols-2">
               {insights.map((ins, i) => (
