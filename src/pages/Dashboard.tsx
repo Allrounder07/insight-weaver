@@ -393,6 +393,11 @@ const Dashboard = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Data Table */}
+        <div className="mt-8">
+          <DataTable data={analysis.rawData} columns={analysis.columns} />
+        </div>
       </div>
     </div>
   );
