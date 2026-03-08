@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/components/ui/sonner";
+import { lovable } from "@/integrations/lovable/index";
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
