@@ -124,7 +124,7 @@ const UploadPage = () => {
             <input
               id="file-input"
               type="file"
-              accept=".csv"
+              accept=".csv,.xlsx,.xls"
               className="hidden"
               onChange={handleFileInput}
             />
