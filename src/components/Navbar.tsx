@@ -106,7 +106,10 @@ const Navbar = () => {
       {mobileOpen && (
         <div className="border-t border-border/50 bg-background/95 backdrop-blur-xl md:hidden">
           <div className="section-container flex flex-col gap-1 py-4">
-            {navLinks.map((link) => (
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-border/50">
+              <span className="text-xs text-muted-foreground">Theme</span>
+              <ThemeToggle />
+            </div>
               <Link key={link.path} to={link.path} onClick={() => setMobileOpen(false)}>
                 <Button variant={isActive(link.path) ? "secondary" : "ghost"} size="sm" className="w-full justify-start gap-2 text-sm">
                   {link.icon && <link.icon className="h-4 w-4" />}
