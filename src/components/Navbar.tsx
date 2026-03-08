@@ -32,7 +32,7 @@ const Navbar = () => {
             <BarChart3 className="h-5 w-5 text-primary" />
           </div>
           <span className="text-lg font-bold tracking-tight">
-            Data<span className="gradient-text">Lens</span>
+            Insight<span className="gradient-text">Forge</span>
           </span>
         </Link>
 

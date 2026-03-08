@@ -277,7 +277,7 @@ const Index = () => {
         <div className="section-container flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4 text-primary" />
-            <span className="font-medium text-foreground">DataLens</span>
+            <span className="font-medium text-foreground">InsightForge</span>
           </div>
           <p>Built for Data Scientists, Analysts &amp; Researchers</p>
         </div>
