@@ -247,7 +247,6 @@ const Dashboard = () => {
               Export PDF
             </Button>
           </div>
-          </Button>
         </motion.div>
 
         {/* Stats cards */}
