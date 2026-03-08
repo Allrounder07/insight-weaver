@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      datasets: {
+        Row: {
+          ai_insights: string | null
+          categorical_columns: Json
+          categorical_counts: Json
+          column_count: number
+          column_types: Json
+          columns: Json
+          correlations: Json
+          created_at: string
+          duplicate_rows: number
+          file_name: string
+          file_size: number
+          id: string
+          missing_percent: number
+          missing_values: number
+          numeric_columns: Json
+          row_count: number
+          share_id: string | null
+          stats: Json
+          updated_at: string
+          user_id: string
+          validation_report: Json | null
+        }
+        Insert: {
+          ai_insights?: string | null
+          categorical_columns?: Json
+          categorical_counts?: Json
+          column_count?: number
+          column_types?: Json
+          columns?: Json
+          correlations?: Json
+          created_at?: string
+          duplicate_rows?: number
+          file_name: string
+          file_size?: number
+          id?: string
+          missing_percent?: number
+          missing_values?: number
+          numeric_columns?: Json
+          row_count?: number
+          share_id?: string | null
+          stats?: Json
+          updated_at?: string
+          user_id: string
+          validation_report?: Json | null
+        }
+        Update: {
+          ai_insights?: string | null
+          categorical_columns?: Json
+          categorical_counts?: Json
+          column_count?: number
+          column_types?: Json
+          columns?: Json
+          correlations?: Json
+          created_at?: string
+          duplicate_rows?: number
+          file_name?: string
+          file_size?: number
+          id?: string
+          missing_percent?: number
+          missing_values?: number
+          numeric_columns?: Json
+          row_count?: number
+          share_id?: string | null
+          stats?: Json
+          updated_at?: string
+          user_id?: string
+          validation_report?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

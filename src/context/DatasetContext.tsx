@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import type { ValidationReport } from "@/lib/validateDataset";
 
 export interface DatasetAnalysis {
   fileName: string;
@@ -15,6 +16,10 @@ export interface DatasetAnalysis {
   stats: Record<string, { mean: number; median: number; min: number; max: number; stdDev: number }>;
   correlations: { col1: string; col2: string; value: number }[];
   categoricalCounts: Record<string, Record<string, number>>;
+  validationReport?: ValidationReport;
+  aiInsights?: string;
+  savedId?: string;
+  shareId?: string;
 }
 
 interface DatasetContextType {

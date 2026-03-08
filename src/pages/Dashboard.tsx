@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import {
   Brain, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, GitBranch,
-  Database, Rows3, Columns3, Hash, Upload, Download, Loader2,
+  Database, Rows3, Columns3, Hash, Upload, Download, Loader2, Share2, Link as LinkIcon, Copy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDataset } from "@/context/DatasetContext";
@@ -16,6 +16,7 @@ import DataTable from "@/components/DataTable";
 import CorrelationHeatmap from "@/components/CorrelationHeatmap";
 import HistogramCharts from "@/components/HistogramCharts";
 import BoxPlotCharts from "@/components/BoxPlotCharts";
+import ValidationReportCard from "@/components/ValidationReportCard";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
@@ -225,10 +226,27 @@ const Dashboard = () => {
               {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
             </p>
           </div>
-          <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5 shrink-0">
-            {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-            Export PDF
-          </Button>
+          <div className="flex gap-2 shrink-0">
+            {analysis.shareId && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-1.5"
+                onClick={() => {
+                  const url = `${window.location.origin}/shared/${analysis.shareId}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success("Share link copied to clipboard!");
+                }}
+              >
+                <Share2 className="h-4 w-4" />
+                Share
+              </Button>
+            )}
+            <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5">
+              {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              Export PDF
+            </Button>
+          </div>
         </motion.div>
 
         {/* Stats cards */}
@@ -365,12 +383,34 @@ const Dashboard = () => {
           <CorrelationHeatmap analysis={analysis} />
         )}
 
-        {/* AI Insights */}
+        {/* Validation Report */}
+        {analysis.validationReport && (
+          <ValidationReportCard report={analysis.validationReport} />
+        )}
+
+        {/* AI-Generated Insights */}
+        {analysis.aiInsights && (
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="glass-card glow-border mb-8 p-6">
+            <div className="mb-4 flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <h2 className="text-lg font-bold">AI-Generated Insights</h2>
+            </div>
+            <div className="prose prose-invert prose-sm max-w-none text-muted-foreground [&_strong]:text-foreground">
+              {analysis.aiInsights.split("\n").map((line, i) => (
+                <p key={i} className={line.trim() === "" ? "hidden" : "mb-2 text-sm leading-relaxed"}>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Pattern Insights */}
         {insights.length > 0 && (
           <motion.div initial="hidden" animate="visible" className="mb-8">
             <motion.div custom={0} variants={fadeUp} className="mb-6 flex items-center gap-2">
               <Brain className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-bold">AI Insights</h2>
+              <h2 className="text-xl font-bold">Pattern Analysis</h2>
             </motion.div>
             <div className="grid gap-4 sm:grid-cols-2">
               {insights.map((ins, i) => (
