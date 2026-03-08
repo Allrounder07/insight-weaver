@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import {
   Brain, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, GitBranch,
-  Database, Rows3, Columns3, Hash, Upload, Download, Loader2,
+  Database, Rows3, Columns3, Hash, Upload, Download, Loader2, Share2, Link as LinkIcon, Copy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDataset } from "@/context/DatasetContext";
@@ -16,6 +16,7 @@ import DataTable from "@/components/DataTable";
 import CorrelationHeatmap from "@/components/CorrelationHeatmap";
 import HistogramCharts from "@/components/HistogramCharts";
 import BoxPlotCharts from "@/components/BoxPlotCharts";
+import ValidationReportCard from "@/components/ValidationReportCard";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
