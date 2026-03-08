@@ -106,17 +106,18 @@ const Index = () => {
               </Link>
             </motion.div>
 
-            {/* Stats row */}
-            <motion.div custom={4} variants={fadeUp} className="mt-16 grid grid-cols-3 gap-8">
+            {/* Tech names ticker */}
+            <motion.div custom={4} variants={fadeUp} className="mt-16 flex flex-wrap items-center justify-center gap-3">
               {[
-                { value: "10+", label: "Chart Types" },
-                { value: "< 5s", label: "Analysis Time" },
-                { value: "AI", label: "Powered Insights" },
-              ].map((s) => (
-                <div key={s.label} className="text-center">
-                  <div className="text-2xl font-bold text-primary">{s.value}</div>
-                  <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
-                </div>
+                "Python", "Pandas", "NumPy", "Scikit-Learn", "TensorFlow",
+                "PyTorch", "Matplotlib", "Jupyter", "R", "SQL", "Keras", "Spark",
+              ].map((name) => (
+                <span
+                  key={name}
+                  className="rounded-full border border-border bg-secondary/40 px-3 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  {name}
+                </span>
               ))}
             </motion.div>
           </motion.div>
@@ -278,7 +279,7 @@ const Index = () => {
             <BarChart3 className="h-4 w-4 text-primary" />
             <span className="font-medium text-foreground">DataLens</span>
           </div>
-          <p>AI-Powered Dataset Analysis Platform</p>
+          <p>Built for Data Scientists, Analysts &amp; Researchers</p>
         </div>
       </footer>
     </div>
