@@ -48,6 +48,7 @@ const Navbar = () => {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 md:flex">
+          <ThemeToggle />
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path}>
               <Button variant={isActive(link.path) ? "secondary" : "ghost"} size="sm" className="gap-1.5 text-sm">

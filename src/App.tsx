@@ -49,6 +49,7 @@ const App = () => (
         </DatasetProvider>
       </AuthProvider>
     </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
