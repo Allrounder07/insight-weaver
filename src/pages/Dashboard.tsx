@@ -93,6 +93,30 @@ const Dashboard = () => {
     }
   }, [analysis]);
 
+  const handleExportCSV = useCallback(() => {
+    if (!analysis) return;
+    const Papa = require("papaparse");
+    const csv = Papa.unparse(analysis.rawData);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${analysis.fileName.replace(/\.[^.]+$/, "")}_export.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("CSV downloaded!");
+  }, [analysis]);
+
+  const handleExportExcel = useCallback(async () => {
+    if (!analysis) return;
+    const XLSX = await import("xlsx");
+    const ws = XLSX.utils.json_to_sheet(analysis.rawData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Data");
+    XLSX.writeFile(wb, `${analysis.fileName.replace(/\.[^.]+$/, "")}_export.xlsx`);
+    toast.success("Excel file downloaded!");
+  }, [analysis]);
+
   // Derived chart data
   const { barChartData, pieChartData, scatterData, trendData, insights, mlModels } = useMemo(() => {
     if (!analysis) return { barChartData: [], pieChartData: [], scatterData: [], trendData: [], insights: [], mlModels: [] };
