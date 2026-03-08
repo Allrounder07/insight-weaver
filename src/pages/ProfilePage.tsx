@@ -29,7 +29,15 @@ const AVATAR_ICONS = [
 const ProfilePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [selectedAvatar, setSelectedAvatar] = useState(0);
+  const [selectedAvatar, setSelectedAvatar] = useState(() => {
+    const saved = localStorage.getItem("datalens-avatar");
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  const handleAvatarSelect = (index: number) => {
+    setSelectedAvatar(index);
+    localStorage.setItem("datalens-avatar", String(index));
+  };
   const [displayName, setDisplayName] = useState(
     user?.user_metadata?.full_name || user?.user_metadata?.name || ""
   );
