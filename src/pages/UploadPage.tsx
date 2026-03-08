@@ -32,7 +32,6 @@ const UploadPage = () => {
     setFile(f);
 
     if (ext === "csv") {
-      // Parse full file
       Papa.parse(f, {
         complete: (results) => {
           const data = results.data as string[][];
@@ -41,7 +40,21 @@ const UploadPage = () => {
         },
       });
     } else {
-      setError("Only CSV files are supported for analysis at the moment.");
+      // Excel parsing
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const wb = XLSX.read(e.target?.result, { type: "array" });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const data = XLSX.utils.sheet_to_json<string[]>(ws, { header: 1, defval: "" });
+          const strData = data.map((row) => row.map((cell) => String(cell)));
+          setFullData(strData);
+          setPreview(strData.slice(0, 6));
+        } catch {
+          setError("Failed to parse Excel file.");
+        }
+      };
+      reader.readAsArrayBuffer(f);
     }
   }, []);
 
