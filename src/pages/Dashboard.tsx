@@ -15,6 +15,7 @@ import { toast } from "@/components/ui/sonner";
 import DataTable from "@/components/DataTable";
 import CorrelationHeatmap from "@/components/CorrelationHeatmap";
 import HistogramCharts from "@/components/HistogramCharts";
+import BoxPlotCharts from "@/components/BoxPlotCharts";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
@@ -352,6 +353,11 @@ const Dashboard = () => {
         {/* Histogram Distributions */}
         {analysis.numericColumns.length > 0 && (
           <HistogramCharts analysis={analysis} />
+        )}
+
+        {/* Box Plots */}
+        {analysis.numericColumns.length > 0 && (
+          <BoxPlotCharts analysis={analysis} />
         )}
 
         {/* Correlation Heatmap */}
