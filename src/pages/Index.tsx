@@ -81,7 +81,7 @@ const Index = () => {
               AI-Powered Data Analysis
             </motion.div>
 
-            <motion.h1 custom={1} variants={fadeUp} className="mb-6 text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+            <motion.h1 custom={1} variants={fadeUp} className="mb-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-7xl">
               Analyse{" "}
               <span className="gradient-text">Datasets</span>
             </motion.h1>
