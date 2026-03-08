@@ -139,7 +139,7 @@ const UploadPage = () => {
                     {isDragging ? "Drop your file here" : "Drag & drop your dataset"}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    or click to browse · CSV · Max 50MB
+                    or click to browse · CSV, XLSX · Max 50MB
                   </p>
                 </div>
               </div>
