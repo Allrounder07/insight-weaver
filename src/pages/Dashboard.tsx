@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -7,10 +7,11 @@ import {
 } from "recharts";
 import {
   Brain, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, GitBranch,
-  Database, Rows3, Columns3, Hash, Upload,
+  Database, Rows3, Columns3, Hash, Upload, Download, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDataset } from "@/context/DatasetContext";
+import { toast } from "@/components/ui/sonner";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
@@ -41,6 +42,51 @@ const fadeUp = {
 const Dashboard = () => {
   const { analysis } = useDataset();
   const navigate = useNavigate();
+  const dashboardRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportPDF = useCallback(async () => {
+    if (!dashboardRef.current || !analysis) return;
+    setExporting(true);
+    toast("Generating PDF report…");
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const { jsPDF } = await import("jspdf");
+
+      const canvas = await html2canvas(dashboardRef.current, {
+        scale: 2,
+        backgroundColor: "#0f1117",
+        useCORS: true,
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const imgWidth = 210; // A4 width mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdf = new jsPDF("p", "mm", "a4");
+      let position = 0;
+      const pageHeight = 297;
+
+      // Multi-page support
+      let remainingHeight = imgHeight;
+      while (remainingHeight > 0) {
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        remainingHeight -= pageHeight;
+        if (remainingHeight > 0) {
+          pdf.addPage();
+          position -= pageHeight;
+        }
+      }
+
+      pdf.save(`${analysis.fileName.replace(/\.[^.]+$/, "")}_analysis.pdf`);
+      toast.success("PDF report downloaded!");
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to generate PDF");
+    } finally {
+      setExporting(false);
+    }
+  }, [analysis]);
 
   // Derived chart data
   const { barChartData, pieChartData, scatterData, trendData, insights, mlModels } = useMemo(() => {
@@ -165,14 +211,20 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background pt-20 pb-16">
-      <div className="section-container">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-2xl font-bold sm:text-3xl">
-            Analysis <span className="gradient-text">Dashboard</span>
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
-          </p>
+      <div className="section-container" ref={dashboardRef}>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold sm:text-3xl">
+              Analysis <span className="gradient-text">Dashboard</span>
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
+            </p>
+          </div>
+          <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5 shrink-0">
+            {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+            Export PDF
+          </Button>
         </motion.div>
 
         {/* Stats cards */}
