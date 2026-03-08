@@ -14,6 +14,7 @@ import { useDataset } from "@/context/DatasetContext";
 import { toast } from "@/components/ui/sonner";
 import DataTable from "@/components/DataTable";
 import CorrelationHeatmap from "@/components/CorrelationHeatmap";
+import HistogramCharts from "@/components/HistogramCharts";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
@@ -347,6 +348,11 @@ const Dashboard = () => {
             </motion.div>
           )}
         </div>
+
+        {/* Histogram Distributions */}
+        {analysis.numericColumns.length > 0 && (
+          <HistogramCharts analysis={analysis} />
+        )}
 
         {/* Correlation Heatmap */}
         {analysis.numericColumns.length >= 2 && (
