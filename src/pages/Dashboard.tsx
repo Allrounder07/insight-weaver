@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -7,10 +7,11 @@ import {
 } from "recharts";
 import {
   Brain, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, GitBranch,
-  Database, Rows3, Columns3, Hash, Upload,
+  Database, Rows3, Columns3, Hash, Upload, Download, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDataset } from "@/context/DatasetContext";
+import { toast } from "@/components/ui/sonner";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
