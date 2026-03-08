@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import SharedDashboard from "./pages/SharedDashboard";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
+import HistoryPage from "./pages/HistoryPage";
 import NotFound from "./pages/NotFound";
 import { DatasetProvider } from "./context/DatasetContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/upload" element={<ProtectedRoute><UploadPage /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
               <Route path="/shared/:shareId" element={<SharedDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

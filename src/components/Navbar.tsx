@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User } from "lucide-react";
+import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -68,6 +68,10 @@ const Navbar = () => {
                 <DropdownMenuItem onClick={() => navigate("/profile")} className="gap-2 cursor-pointer">
                   <User className="h-4 w-4" />
                   Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/history")} className="gap-2 cursor-pointer">
+                  <History className="h-4 w-4" />
+                  History
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="gap-2 cursor-pointer text-destructive">
