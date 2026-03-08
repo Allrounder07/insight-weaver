@@ -110,6 +110,7 @@ const Navbar = () => {
               <span className="text-xs text-muted-foreground">Theme</span>
               <ThemeToggle />
             </div>
+            {navLinks.map((link) => (
               <Link key={link.path} to={link.path} onClick={() => setMobileOpen(false)}>
                 <Button variant={isActive(link.path) ? "secondary" : "ghost"} size="sm" className="w-full justify-start gap-2 text-sm">
                   {link.icon && <link.icon className="h-4 w-4" />}
