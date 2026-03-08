@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Upload, BarChart3, Brain, Sparkles, Database, Zap,
-  ArrowRight, CheckCircle2, TrendingUp, PieChart, ScatterChart, GitBranch
+  ArrowRight, TrendingUp, PieChart, ScatterChart, GitBranch
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CursorLight from "@/components/CursorLight";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -33,6 +34,8 @@ const workflow = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <CursorLight />
+
       {/* Hero */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden pt-16">
         {/* Grid background */}
@@ -41,8 +44,31 @@ const Index = () => {
           backgroundSize: "60px 60px"
         }} />
         {/* Glow orbs */}
-        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-accent/5 blur-[120px]" />
+        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-[120px] animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-accent/5 blur-[120px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-1 w-1 rounded-full bg-primary/30"
+              style={{
+                left: `${15 + i * 15}%`,
+                top: `${20 + (i % 3) * 25}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.2, 0.8, 0.2],
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.4,
+              }}
+            />
+          ))}
+        </div>
 
         <div className="section-container relative z-10">
           <motion.div
@@ -56,26 +82,26 @@ const Index = () => {
             </motion.div>
 
             <motion.h1 custom={1} variants={fadeUp} className="mb-6 text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
-              Analyze Datasets
-              <br />
-              <span className="gradient-text">Without Code</span>
+              Analyse{" "}
+              <span className="gradient-text">Datasets</span>
             </motion.h1>
 
             <motion.p custom={2} variants={fadeUp} className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
-              Upload any dataset and get instant statistical analysis, beautiful visualizations, and AI-generated insights — no programming required.
+              Upload any dataset and get instant statistical analysis, beautiful visualizations, and AI-generated insights.
             </motion.p>
 
             <motion.div custom={3} variants={fadeUp} className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link to="/upload">
-                <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90">
+                <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90 group">
                   <Upload className="h-4 w-4" />
                   Upload Dataset
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="gap-2 px-8">
+                <Button size="lg" variant="outline" className="gap-2 px-8 group">
                   View Demo Dashboard
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
             </motion.div>
@@ -234,10 +260,10 @@ const Index = () => {
             </motion.p>
             <motion.div custom={2} variants={fadeUp}>
               <Link to="/upload">
-                <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90">
+                <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90 group">
                   <Upload className="h-4 w-4" />
                   Get Started
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
             </motion.div>
