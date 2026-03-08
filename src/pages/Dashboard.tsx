@@ -355,6 +355,11 @@ const Dashboard = () => {
           <HistogramCharts analysis={analysis} />
         )}
 
+        {/* Box Plots */}
+        {analysis.numericColumns.length > 0 && (
+          <BoxPlotCharts analysis={analysis} />
+        )}
+
         {/* Correlation Heatmap */}
         {analysis.numericColumns.length >= 2 && (
           <CorrelationHeatmap analysis={analysis} />
