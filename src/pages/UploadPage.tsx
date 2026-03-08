@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Upload, FileSpreadsheet, CheckCircle2, AlertCircle, X, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
+import * as XLSX from "xlsx";
 import { useDataset } from "@/context/DatasetContext";
 import { analyzeDataset } from "@/lib/analyzeDataset";
 
