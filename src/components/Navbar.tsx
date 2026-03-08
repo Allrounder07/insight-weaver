@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User } from "lucide-react";
+import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import {
