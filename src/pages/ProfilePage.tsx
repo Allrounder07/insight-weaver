@@ -29,7 +29,15 @@ const AVATAR_ICONS = [
 const ProfilePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [selectedAvatar, setSelectedAvatar] = useState(0);
+  const [selectedAvatar, setSelectedAvatar] = useState(() => {
+    const saved = localStorage.getItem("datalens-avatar");
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  const handleAvatarSelect = (index: number) => {
+    setSelectedAvatar(index);
+    localStorage.setItem("datalens-avatar", String(index));
+  };
   const [displayName, setDisplayName] = useState(
     user?.user_metadata?.full_name || user?.user_metadata?.name || ""
   );
@@ -142,7 +150,7 @@ const ProfilePage = () => {
                   key={a.label}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedAvatar(i)}
+                  onClick={() => handleAvatarSelect(i)}
                   className={`flex flex-col items-center gap-1.5 rounded-xl border p-3 transition-all duration-300 ${
                     isSelected
                       ? "border-primary bg-primary/10 shadow-lg"
