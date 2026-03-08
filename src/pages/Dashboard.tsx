@@ -93,9 +93,9 @@ const Dashboard = () => {
     }
   }, [analysis]);
 
-  const handleExportCSV = useCallback(() => {
+  const handleExportCSV = useCallback(async () => {
     if (!analysis) return;
-    const Papa = require("papaparse");
+    const Papa = await import("papaparse");
     const csv = Papa.unparse(analysis.rawData);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
