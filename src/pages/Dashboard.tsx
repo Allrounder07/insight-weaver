@@ -211,14 +211,20 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background pt-20 pb-16">
-      <div className="section-container">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-2xl font-bold sm:text-3xl">
-            Analysis <span className="gradient-text">Dashboard</span>
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
-          </p>
+      <div className="section-container" ref={dashboardRef}>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold sm:text-3xl">
+              Analysis <span className="gradient-text">Dashboard</span>
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
+            </p>
+          </div>
+          <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5 shrink-0">
+            {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+            Export PDF
+          </Button>
         </motion.div>
 
         {/* Stats cards */}
