@@ -349,6 +349,11 @@ const Dashboard = () => {
           )}
         </div>
 
+        {/* Histogram Distributions */}
+        {analysis.numericColumns.length > 0 && (
+          <HistogramCharts analysis={analysis} />
+        )}
+
         {/* Correlation Heatmap */}
         {analysis.numericColumns.length >= 2 && (
           <CorrelationHeatmap analysis={analysis} />
