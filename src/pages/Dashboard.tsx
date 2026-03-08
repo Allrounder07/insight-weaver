@@ -241,12 +241,12 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background pt-20 pb-16">
       <div className="section-container" ref={dashboardRef}>
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex items-start justify-between">
-          <div>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
             <h1 className="text-2xl font-bold sm:text-3xl">
               Analysis <span className="gradient-text">Dashboard</span>
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground truncate">
               {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
             </p>
           </div>

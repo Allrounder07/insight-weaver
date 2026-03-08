@@ -81,7 +81,7 @@ const Index = () => {
               AI-Powered Data Analysis
             </motion.div>
 
-            <motion.h1 custom={1} variants={fadeUp} className="mb-6 text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+            <motion.h1 custom={1} variants={fadeUp} className="mb-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-7xl">
               Analyse{" "}
               <span className="gradient-text">Datasets</span>
             </motion.h1>
@@ -274,7 +274,7 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-8">
-        <div className="section-container flex items-center justify-between text-sm text-muted-foreground">
+        <div className="section-container flex flex-col items-center gap-2 text-center text-sm text-muted-foreground sm:flex-row sm:justify-between sm:text-left">
           <div className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4 text-primary" />
             <span className="font-medium text-foreground">InsightForge</span>
