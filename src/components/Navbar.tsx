@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User, History, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,6 +48,7 @@ const Navbar = () => {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 md:flex">
+          <ThemeToggle />
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path}>
               <Button variant={isActive(link.path) ? "secondary" : "ghost"} size="sm" className="gap-1.5 text-sm">
@@ -104,6 +106,10 @@ const Navbar = () => {
       {mobileOpen && (
         <div className="border-t border-border/50 bg-background/95 backdrop-blur-xl md:hidden">
           <div className="section-container flex flex-col gap-1 py-4">
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-border/50">
+              <span className="text-xs text-muted-foreground">Theme</span>
+              <ThemeToggle />
+            </div>
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} onClick={() => setMobileOpen(false)}>
                 <Button variant={isActive(link.path) ? "secondary" : "ghost"} size="sm" className="w-full justify-start gap-2 text-sm">
