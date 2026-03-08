@@ -42,6 +42,51 @@ const fadeUp = {
 const Dashboard = () => {
   const { analysis } = useDataset();
   const navigate = useNavigate();
+  const dashboardRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportPDF = useCallback(async () => {
+    if (!dashboardRef.current || !analysis) return;
+    setExporting(true);
+    toast("Generating PDF report…");
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const { jsPDF } = await import("jspdf");
+
+      const canvas = await html2canvas(dashboardRef.current, {
+        scale: 2,
+        backgroundColor: "#0f1117",
+        useCORS: true,
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const imgWidth = 210; // A4 width mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdf = new jsPDF("p", "mm", "a4");
+      let position = 0;
+      const pageHeight = 297;
+
+      // Multi-page support
+      let remainingHeight = imgHeight;
+      while (remainingHeight > 0) {
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        remainingHeight -= pageHeight;
+        if (remainingHeight > 0) {
+          pdf.addPage();
+          position -= pageHeight;
+        }
+      }
+
+      pdf.save(`${analysis.fileName.replace(/\.[^.]+$/, "")}_analysis.pdf`);
+      toast.success("PDF report downloaded!");
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to generate PDF");
+    } finally {
+      setExporting(false);
+    }
+  }, [analysis]);
 
   // Derived chart data
   const { barChartData, pieChartData, scatterData, trendData, insights, mlModels } = useMemo(() => {
