@@ -150,7 +150,7 @@ const ProfilePage = () => {
                   key={a.label}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedAvatar(i)}
+                  onClick={() => handleAvatarSelect(i)}
                   className={`flex flex-col items-center gap-1.5 rounded-xl border p-3 transition-all duration-300 ${
                     isSelected
                       ? "border-primary bg-primary/10 shadow-lg"
