@@ -1,7 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut } from "lucide-react";
+import { BarChart3, Upload, LayoutDashboard, LogIn, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
@@ -13,6 +20,9 @@ const Navbar = () => {
     await signOut();
     navigate("/");
   };
+
+  const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "";
+  const userInitial = userName.charAt(0).toUpperCase();
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -45,10 +55,27 @@ const Navbar = () => {
             </Button>
           </Link>
           {user ? (
-            <Button variant="ghost" size="sm" className="gap-1.5 text-sm" onClick={handleSignOut}>
-              <LogOut className="h-4 w-4" />
-              Sign Out
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="ml-1 gap-2 text-sm">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-xs font-bold text-primary ring-2 ring-primary/20">
+                    {userInitial}
+                  </div>
+                  <span className="hidden sm:inline">{userName}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => navigate("/profile")} className="gap-2 cursor-pointer">
+                  <User className="h-4 w-4" />
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="gap-2 cursor-pointer text-destructive">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Link to="/auth">
               <Button variant={isActive("/auth") ? "secondary" : "ghost"} size="sm" className="gap-1.5 text-sm">
