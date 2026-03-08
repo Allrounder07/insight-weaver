@@ -69,6 +69,10 @@ const Navbar = () => {
                   <User className="h-4 w-4" />
                   Profile
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/history")} className="gap-2 cursor-pointer">
+                  <History className="h-4 w-4" />
+                  History
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="gap-2 cursor-pointer text-destructive">
                   <LogOut className="h-4 w-4" />
