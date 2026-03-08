@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDataset } from "@/context/DatasetContext";
 import { toast } from "@/components/ui/sonner";
+import DataTable from "@/components/DataTable";
 
 const COLORS = [
   "hsl(174, 72%, 52%)",
@@ -392,6 +393,11 @@ const Dashboard = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Data Table */}
+        <div className="mt-8">
+          <DataTable data={analysis.rawData} columns={analysis.columns} />
+        </div>
       </div>
     </div>
   );
