@@ -348,6 +348,11 @@ const Dashboard = () => {
           )}
         </div>
 
+        {/* Correlation Heatmap */}
+        {analysis.numericColumns.length >= 2 && (
+          <CorrelationHeatmap analysis={analysis} />
+        )}
+
         {/* AI Insights */}
         {insights.length > 0 && (
           <motion.div initial="hidden" animate="visible" className="mb-8">
