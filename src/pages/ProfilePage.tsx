@@ -5,24 +5,25 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  User, Mail, Shield, Calendar, Camera, Palette,
-  Sparkles, BarChart3, Code2, Cpu, Database, Globe,
-  Layers, Terminal, Wifi, Zap
+  User, Mail, Shield, Calendar, Palette,
+  Sparkles, BarChart3, BrainCircuit, FlaskConical, LineChart,
+  PieChart, ScatterChart, TrendingUp, Binary, Sigma, Atom,
+  Network,
 } from "lucide-react";
 
 const AVATAR_ICONS = [
-  { icon: Code2, label: "Code", color: "174 72% 52%" },
-  { icon: Terminal, label: "Terminal", color: "262 60% 58%" },
-  { icon: Cpu, label: "CPU", color: "38 92% 60%" },
-  { icon: Database, label: "Database", color: "200 80% 55%" },
-  { icon: Globe, label: "Globe", color: "340 65% 58%" },
-  { icon: Layers, label: "Layers", color: "174 72% 42%" },
-  { icon: Wifi, label: "Wifi", color: "262 60% 68%" },
-  { icon: Zap, label: "Zap", color: "38 92% 50%" },
-  { icon: BarChart3, label: "Chart", color: "200 80% 45%" },
-  { icon: Sparkles, label: "Sparkles", color: "340 65% 68%" },
-  { icon: Shield, label: "Shield", color: "174 72% 62%" },
-  { icon: Camera, label: "Camera", color: "262 60% 48%" },
+  { icon: BrainCircuit, label: "ML", color: "174 72% 52%" },
+  { icon: FlaskConical, label: "Research", color: "262 60% 58%" },
+  { icon: BarChart3, label: "Analytics", color: "38 92% 60%" },
+  { icon: LineChart, label: "Trends", color: "200 80% 55%" },
+  { icon: PieChart, label: "Stats", color: "340 65% 58%" },
+  { icon: ScatterChart, label: "Scatter", color: "174 72% 42%" },
+  { icon: TrendingUp, label: "Forecast", color: "262 60% 68%" },
+  { icon: Binary, label: "Binary", color: "38 92% 50%" },
+  { icon: Sigma, label: "Sigma", color: "200 80% 45%" },
+  { icon: Network, label: "Neural Net", color: "340 65% 68%" },
+  { icon: Atom, label: "Science", color: "174 72% 62%" },
+  { icon: Sparkles, label: "AI", color: "262 60% 48%" },
 ];
 
 const ProfilePage = () => {

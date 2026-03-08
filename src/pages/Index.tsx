@@ -279,7 +279,7 @@ const Index = () => {
             <BarChart3 className="h-4 w-4 text-primary" />
             <span className="font-medium text-foreground">DataLens</span>
           </div>
-          <p>AI-Powered Dataset Analysis Platform</p>
+          <p>Built for Data Scientists, Analysts &amp; Researchers</p>
         </div>
       </footer>
     </div>
