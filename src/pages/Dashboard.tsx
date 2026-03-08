@@ -226,9 +226,27 @@ const Dashboard = () => {
               {analysis.fileName} — {analysis.rows.toLocaleString()} records × {analysis.columns.length} columns
             </p>
           </div>
-          <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5 shrink-0">
-            {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-            Export PDF
+          <div className="flex gap-2 shrink-0">
+            {analysis.shareId && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-1.5"
+                onClick={() => {
+                  const url = `${window.location.origin}/shared/${analysis.shareId}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success("Share link copied to clipboard!");
+                }}
+              >
+                <Share2 className="h-4 w-4" />
+                Share
+              </Button>
+            )}
+            <Button onClick={handleExportPDF} disabled={exporting} variant="outline" size="sm" className="gap-1.5">
+              {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              Export PDF
+            </Button>
+          </div>
           </Button>
         </motion.div>
 
