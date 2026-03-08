@@ -98,7 +98,7 @@ const UploadPage = () => {
             Upload Your <span className="gradient-text">Dataset</span>
           </h1>
           <p className="text-muted-foreground">
-            Drop a CSV file to start instant AI-powered analysis.
+            Drop a CSV or Excel file to start instant AI-powered analysis.
           </p>
         </motion.div>
 
